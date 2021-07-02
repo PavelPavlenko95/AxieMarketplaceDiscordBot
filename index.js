@@ -3,6 +3,9 @@ const unirest = require("unirest");
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
+const prefix = "!";
+var classes = [];
+
 
 bot.login(TOKEN);
 
@@ -10,26 +13,35 @@ bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
 
+bot.on('message', message => {
+  // classes = [];
+  // classes.length = 0;
+	if (!message.content.startsWith(prefix)) return;
+	const args = message.content.slice(prefix.length).trim().split(' ');
+	const command = args.shift().toLowerCase();
+
+    if(command === 'class'){
+      if (!args.length) {
+        return message.reply(`You didn't provide any arguments, ${message.author}!`);
+      }
+    }
+    classes = args;
+    message.reply(`Selected classes: ${classes}`);
+    console.log(classes);
+  
+});
+
+
 
 
 
 bot.on('message', msg => {
-  // if (msg.content === 'ping') {
-  //   msg.reply('pong');
-  //   msg.channel.send('pong');
+  
 
-  // } else if (msg.content.startsWith('!kick')) {
-  //   if (msg.mentions.users.size) {
-  //     const taggedUser = msg.mentions.users.first();
-  //     msg.channel.send(`You wanted to kick: ${taggedUser.username}`);
-  //   } else {
-  //     msg.reply('Please tag a valid user!');
-  //   }
-  // }
+if (msg.content === 'start'){
 
-
-if (msg.content === 'ping'){
-
+  let timerId = setTimeout(function tick() {
+    
 const req = unirest("POST", "https://axieinfinity.com/graphql-server-v2/graphql");
 
 req.headers({
@@ -40,10 +52,41 @@ req.send("{\"query\":\"query GetAxieLatest($auctionType: AuctionType, $criteria:
 
 req.end(function (res) {
   if (res.error) throw new Error(res.error);
-  console.log(res.body.data.axies);
 
-  msg.reply();
-});
+  for(var i = 0; i<10; i++){ 
+
+    console.log(res.body.data.axies.results[i].class + res.body.data.axies.results[i].id);
+    if(classes.includes(res.body.data.axies.results[i].class)){
+      console.log(classes);
+      // console.log(classes[0]);
+      // msg.reply(res.body.data.axies.results[0].class);
+      msg.reply(res.body.data.axies.results[i].class + " id: " + res.body.data.axies.results[i].id);
+    }
   
+  }
+
+});
+
+
+//logic
+
+
+//result
+// msg.reply("res.body.data.axies.results[0].class");
+
+bot.on('message', msg => {
+if (msg.content === 'stop') {
+  clearTimeout(timerId);
+}
+})
+timerId = setTimeout(tick, 9000);
+}, 9000);
+
 }
 });
+
+
+
+// console.log(res.body.data.axies.results[0]);
+
+// msg.reply(res.body.data.axies.results[0].class);
