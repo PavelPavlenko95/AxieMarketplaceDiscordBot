@@ -173,8 +173,8 @@ req.end(function (res) {
                         else{
                           foundAxie.push(res.body.data.axies.results[i].id);
                           console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
-                          msg.reply(res.body.data.axies.results[i].class + "\nParts: " + axie.parts + "\nBreed count: " + axie.hpmax + "\nHp: " + res.body.data.axies.results[i].stats.hp
-                          + "\nSpeed: " + res.body.data.axies.results[i].stats.speed + "\nSkill: " + res.body.data.axies.results[i].stats.skill + "\nMorale: " + res.body.data.axies.results[i].stats.morale + "\n" + res.body.data.axies.results[i].breedCount + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+                          msg.reply(res.body.data.axies.results[i].class + "\nParts: " + axie.parts + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\nHp: " + res.body.data.axies.results[i].stats.hp
+                          + "\nSpeed: " + res.body.data.axies.results[i].stats.speed + "\nSkill: " + res.body.data.axies.results[i].stats.skill + "\nMorale: " + res.body.data.axies.results[i].stats.morale + "\n" + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
                         }
                       }
                     }
