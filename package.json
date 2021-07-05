@@ -4,7 +4,8 @@
   "description": "Discord bot for Metaguild",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "node index.js"
   },
   "heroku-run-build-script": true,
   "author": "Michiel Mulders",
