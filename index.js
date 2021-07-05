@@ -123,10 +123,17 @@ bot.on('message', msg => {
     axiesCount++;
     axies.forEach(axie => {
       console.log("Axie in search: " + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax );
-      msg.reply("Axie in search:\n" + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax + "\nHp max: " + axie.hpmax + "\nHp min: " + axie.hpmin + "\nSpeed max: " + axie.speedmax
-       + "\nSpeed min: " + axie.speedmin + "\nSkill max: " + axie.skillmax + "\nSkill min: " + axie.skillmin + "\nMorale max: " + axie.moralemax + "\nMorale min: " + axie.moralemin);
+      msg.reply("Axie in search:\n" + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax + "\nHp max: " + axie.hpmax + " Hp min: " + axie.hpmin + " Speed max: " + axie.speedmax
+       + " Speed min: " + axie.speedmin + " Skill max: " + axie.skillmax + " Skill min: " + axie.skillmin + " Morale max: " + axie.moralemax + " Morale min: " + axie.moralemin);
     });
-    
+  }
+});
+
+bot.on('message', msg => {
+
+  if (msg.content === 'clear'){
+    axies.length = 0;
+    msg.reply("Cleared all Axies.");
   }
 });
 
@@ -134,6 +141,8 @@ bot.on('message', msg => {
 bot.on('message', msg => {
 
 if (msg.content === 'start'){
+
+  msg.reply("Started searching...");
 
   let timerId = setTimeout(function tick() {
     
@@ -167,8 +176,8 @@ req.end(function (res) {
                         else{
                           foundAxie.push(res.body.data.axies.results[i].id);
                           console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
-                          msg.reply(res.body.data.axies.results[i].class + "\nParts: " + axie.parts + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\nHp: " + res.body.data.axies.results[i].stats.hp
-                          + "\nSpeed: " + res.body.data.axies.results[i].stats.speed + "\nSkill: " + res.body.data.axies.results[i].stats.skill + "\nMorale: " + res.body.data.axies.results[i].stats.morale + "\n" + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+                          msg.reply(res.body.data.axies.results[i].class + "\n" + res.body.data.axies.results[i].image + "\nParts: " + axie.parts + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\nHp: " + res.body.data.axies.results[i].stats.hp
+                          + "  Speed: " + res.body.data.axies.results[i].stats.speed + "  Skill: " + res.body.data.axies.results[i].stats.skill + "  Morale: " + res.body.data.axies.results[i].stats.morale + "\n" + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
                         }
                       }
                     }
@@ -189,11 +198,12 @@ req.end(function (res) {
 
   bot.on('message', msg => {
     if (msg.content === 'stop') {
+    msg.reply("Stopped searching...");
     clearTimeout(timerId);
     }
   })
-  timerId = setTimeout(tick, 9000);
-}, 9000);
+  timerId = setTimeout(tick, 8000);
+}, 8000);
 
 }
 });
