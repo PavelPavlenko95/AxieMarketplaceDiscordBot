@@ -176,7 +176,7 @@ req.end(function (res) {
                         else{
                           foundAxie.push(res.body.data.axies.results[i].id);
                           console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
-                          msg.reply(res.body.data.axies.results[i].class + "\n" + res.body.data.axies.results[i].image + "\nParts: " + axie.parts + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\n" + res.body.data.axies.results[i].auction.currentPriceUSD + " USD" +"\nHp: " + res.body.data.axies.results[i].stats.hp
+                          msg.reply(res.body.data.axies.results[i].class + "\n" + res.body.data.axies.results[i].image + "\nParts: " + axie.parts + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\nPrice: " + res.body.data.axies.results[i].auction.currentPriceUSD + " USD" +"\nHp: " + res.body.data.axies.results[i].stats.hp
                           + "  Speed: " + res.body.data.axies.results[i].stats.speed + "  Skill: " + res.body.data.axies.results[i].stats.skill + "  Morale: " + res.body.data.axies.results[i].stats.morale + "\n" + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
                         }
                       }
