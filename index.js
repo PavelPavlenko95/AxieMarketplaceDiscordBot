@@ -4,8 +4,11 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 const prefix = "!";
+
+var axies = [];
 var classes = [];
 var parts = [];
+var partsLength = 0;
 var breedCountmax = 7;
 
 var hpmax = 100;
@@ -16,6 +19,7 @@ var skillmax = 100;
 var skillmin = 0;
 var moralemax = 100;
 var moralemin = 0;
+var foundAxie;
 
 var genesPercent;
 var genes;
@@ -31,6 +35,11 @@ bot.on('message', message => {
 	args = message.content.slice(prefix.length).trim().split(',');
 	const command = args.shift().toLowerCase();
 
+    if(command === 'addaxiesearch'){
+    axies += args;
+    message.reply(`Currenly searching for: ${axies} axies`);
+    }
+
     if(command === 'class'){
       classes = args;
       message.reply(`Selected classes: ${classes}`);
@@ -39,7 +48,7 @@ bot.on('message', message => {
     if(command === 'parts'){
       parts = args;
       message.reply(`Selected parts: ${parts}`);
-      console.log(parts);
+      console.log(parts + parts.length);
     }
 
     if(command === 'breedcountmax'){
@@ -115,25 +124,34 @@ req.end(function (res) {
 
     if(classes.includes(res.body.data.axies.results[i].class)){
       if(breedCountmax >= res.body.data.axies.results[i].breedCount){
+        partsLength = 0;
         for (g = 0; g<6; g++){
           if(parts.includes(res.body.data.axies.results[i].parts[g].name)){
-            console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
-            msg.reply(res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
-        }
-       
-        
-          // if( hpmax >= res.body.data.axies.results[i].stats.hp >= hpmin){
-          //   if( speedmax >= res.body.data.axies.results[i].stats.hp >= speedmin){
-          //     if( skillmax >= res.body.data.axies.results[i].stats.hp >= skillmin){
-          //       if( moralemax >= res.body.data.axies.results[i].stats.hp >= moralemin){
-                  
-                }
-        //       }
-        //     }
-        //   }
+            if(partsLength == parts.length - 1){
+              if( hpmax >= res.body.data.axies.results[i].stats.hp >= hpmin){
+                  if( speedmax >= res.body.data.axies.results[i].stats.hp >= speedmin){
+                    if( skillmax >= res.body.data.axies.results[i].stats.hp >= skillmin){
+                      if( moralemax >= res.body.data.axies.results[i].stats.hp >= moralemin){
+                        if(foundAxie != res.body.data.axies.results[i].id){
+                          console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+                          msg.reply(res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+                        }
+                        else{
+                          foundAxie = res.body.data.axies.results[i].id;
+                        }
+            }
+          }
         }
       }
-    // }
+    }
+            else{
+              console.log(partsLength);
+              partsLength++;
+            }
+        }    
+         }
+        }
+      }
   }
 });
 
