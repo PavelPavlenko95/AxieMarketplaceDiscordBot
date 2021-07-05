@@ -6,6 +6,7 @@ const TOKEN = process.env.TOKEN;
 const prefix = "!";
 
 var axies = [];
+var axiesCount = 0;
 var classes = [];
 var parts = [];
 var partsLength = 0;
@@ -19,12 +20,26 @@ var skillmax = 100;
 var skillmin = 0;
 var moralemax = 100;
 var moralemin = 0;
-var foundAxie;
+var foundAxie = [];
 
 var genesPercent;
 var genes;
 
 bot.login(TOKEN);
+
+function Axie(classes, parts, breedCountmax, hpmax, hpmin, speedmax, speedmin, skillmax, skillmin, moralemax, moralemin){
+  this.classes = classes;
+  this.parts = parts;
+  this.breedCountmax = breedCountmax;
+  this.hpmax = hpmax;
+  this.hpmin = hpmin;
+  this.speedmax = speedmax;
+  this.speedmin = speedmin;
+  this.skillmax = skillmax;
+  this.skillmin = skillmin;
+  this.moralemax = moralemax;
+  this.moralemin = moralemin;
+}
 
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
@@ -35,14 +50,9 @@ bot.on('message', message => {
 	args = message.content.slice(prefix.length).trim().split(',');
 	const command = args.shift().toLowerCase();
 
-    if(command === 'addaxiesearch'){
-    axies += args;
-    message.reply(`Currenly searching for: ${axies} axies`);
-    }
-
     if(command === 'class'){
       classes = args;
-      message.reply(`Selected classes: ${classes}`);
+      message.reply(`Selected class: ${classes}`);
     }
     
     if(command === 'parts'){
@@ -104,6 +114,20 @@ bot.on('message', message => {
 
 bot.on('message', msg => {
 
+  if (msg.content === 'add'){
+    axies[axiesCount] = new Axie(classes, parts, breedCountmax,hpmax,hpmin,speedmax,speedmin,skillmax,skillmin,moralemax,moralemin);
+    axiesCount++;
+    axies.forEach(axie => {
+      console.log("Axie added" + axie.classes);
+      msg.reply("Axie added" + axie.classes);
+    });
+    
+  }
+});
+
+
+bot.on('message', msg => {
+
 if (msg.content === 'start'){
 
   let timerId = setTimeout(function tick() {
@@ -122,45 +146,45 @@ req.end(function (res) {
   for(var i = 0; i<10; i++){ 
     console.log(res.body.data.axies.results[i].class + res.body.data.axies.results[i].id);
 
-    if(classes.includes(res.body.data.axies.results[i].class)){
-      if(breedCountmax >= res.body.data.axies.results[i].breedCount){
+    axies.forEach(axie => {
+    if(axie.classes.includes(res.body.data.axies.results[i].class)){
+      if(axie.breedCountmax >= res.body.data.axies.results[i].breedCount){
         partsLength = 0;
         for (g = 0; g<6; g++){
-          if(parts.includes(res.body.data.axies.results[i].parts[g].name)){
-            if(partsLength == parts.length - 1){
-              if( hpmax >= res.body.data.axies.results[i].stats.hp >= hpmin){
-                  if( speedmax >= res.body.data.axies.results[i].stats.hp >= speedmin){
-                    if( skillmax >= res.body.data.axies.results[i].stats.hp >= skillmin){
-                      if( moralemax >= res.body.data.axies.results[i].stats.hp >= moralemin){
+          if(axie.parts.includes(res.body.data.axies.results[i].parts[g].name)){
+            if(partsLength == axie.parts.length - 1){
+              if( axie.hpmax >= res.body.data.axies.results[i].stats.hp >= axie.hpmin){
+                  if( axie.speedmax >= res.body.data.axies.results[i].stats.hp >= axie.speedmin){
+                    if( axie.skillmax >= res.body.data.axies.results[i].stats.hp >= axie.skillmin){
+                      if( axie.moralemax >= res.body.data.axies.results[i].stats.hp >= axie.moralemin){
                         if(foundAxie != res.body.data.axies.results[i].id){
+                          foundAxie = res.body.data.axies.results[i].id;
                           console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
                           msg.reply(res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
                         }
-                        else{
-                          foundAxie = res.body.data.axies.results[i].id;
-                        }
-            }
-          }
-        }
-      }
-    }
+                      }
+                    }
+                  }
+                }
+              }
             else{
               console.log(partsLength);
               partsLength++;
             }
-        }    
-         }
+          }
         }
-      }
+      }  
+    }
+  });
   }
 });
 
-bot.on('message', msg => {
-if (msg.content === 'stop') {
-  clearTimeout(timerId);
-}
-})
-timerId = setTimeout(tick, 9000);
+  bot.on('message', msg => {
+    if (msg.content === 'stop') {
+    clearTimeout(timerId);
+    }
+  })
+  timerId = setTimeout(tick, 9000);
 }, 9000);
 
 }
