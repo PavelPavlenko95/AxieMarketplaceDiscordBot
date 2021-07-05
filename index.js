@@ -5,7 +5,20 @@ const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 const prefix = "!";
 var classes = [];
+var parts = [];
+var breedCountmax = 7;
 
+var hpmax = 100;
+var hpmin = 0;
+var speedmax = 100;
+var speedmin = 0;
+var skillmax = 100;
+var skillmin = 0;
+var moralemax = 100;
+var moralemin = 0;
+
+var genesPercent;
+var genes;
 
 bot.login(TOKEN);
 
@@ -14,29 +27,73 @@ bot.on('ready', () => {
 });
 
 bot.on('message', message => {
-  // classes = [];
-  // classes.length = 0;
 	if (!message.content.startsWith(prefix)) return;
-	const args = message.content.slice(prefix.length).trim().split(' ');
+	args = message.content.slice(prefix.length).trim().split(',');
 	const command = args.shift().toLowerCase();
 
     if(command === 'class'){
-      if (!args.length) {
-        return message.reply(`You didn't provide any arguments, ${message.author}!`);
-      }
+      classes = args;
+      message.reply(`Selected classes: ${classes}`);
     }
-    classes = args;
-    message.reply(`Selected classes: ${classes}`);
-    console.log(classes);
-  
+    
+    if(command === 'parts'){
+      parts = args;
+      message.reply(`Selected parts: ${parts}`);
+      console.log(parts);
+    }
+
+    if(command === 'breedcountmax'){
+      breedCountmax = args;
+      message.reply(`Breed count max: ${breedCountmax}`);
+      console.log(breedCountmax);
+    }
+
+    if(command === 'hpmax'){
+      hpmax = args;
+      message.reply(`hpmax: ${hpmax}`);
+      console.log(hpmax);
+    }
+    if(command === 'hpmin'){
+      hpmin = args;
+      message.reply(`hpmin: ${hpmin}`);
+      console.log(hpmin);
+    }
+
+    if(command === 'speedmax'){
+      speedmax = args;
+      message.reply(`speedmax: ${speedmax}`);
+      console.log(speedmax);
+    }
+    if(command === 'speedmin'){
+      speedmin = args;
+      message.reply(`speedmin: ${speedmin}`);
+      console.log(speedmin);
+    }
+
+    if(command === 'skillmax'){
+      skillmax = args;
+      message.reply(`skillmax: ${skillmax}`);
+      console.log(skillmax);
+    }
+    if(command === 'skillmin'){
+      skillmin = args;
+      message.reply(`skillmin: ${skillmin}`);
+      console.log(skillmin);
+    }
+
+    if(command === 'moralemax'){
+      moralemax = args;
+      message.reply(`moralemax: ${moralemax}`);
+      console.log(moralemax);
+    }
+    if(command === 'moralemin'){
+      moralemin = args;
+      message.reply(`moralemin: ${moralemin}`);
+      console.log(moralemin);
+    }
 });
 
-
-
-
-
 bot.on('message', msg => {
-  
 
 if (msg.content === 'start'){
 
@@ -54,25 +111,31 @@ req.end(function (res) {
   if (res.error) throw new Error(res.error);
 
   for(var i = 0; i<10; i++){ 
-
     console.log(res.body.data.axies.results[i].class + res.body.data.axies.results[i].id);
+
     if(classes.includes(res.body.data.axies.results[i].class)){
-      console.log(classes);
-      // console.log(classes[0]);
-      // msg.reply(res.body.data.axies.results[0].class);
-      msg.reply(res.body.data.axies.results[i].class + " id: " + res.body.data.axies.results[i].id);
-    }
-  
+      if(breedCountmax >= res.body.data.axies.results[i].breedCount){
+        for (g = 0; g<6; g++){
+          if(parts.includes(res.body.data.axies.results[i].parts[g].name)){
+            console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+            msg.reply(res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+        }
+       
+        
+          // if( hpmax >= res.body.data.axies.results[i].stats.hp >= hpmin){
+          //   if( speedmax >= res.body.data.axies.results[i].stats.hp >= speedmin){
+          //     if( skillmax >= res.body.data.axies.results[i].stats.hp >= skillmin){
+          //       if( moralemax >= res.body.data.axies.results[i].stats.hp >= moralemin){
+                  
+                }
+        //       }
+        //     }
+        //   }
+        }
+      }
+    // }
   }
-
 });
-
-
-//logic
-
-
-//result
-// msg.reply("res.body.data.axies.results[0].class");
 
 bot.on('message', msg => {
 if (msg.content === 'stop') {
@@ -84,9 +147,3 @@ timerId = setTimeout(tick, 9000);
 
 }
 });
-
-
-
-// console.log(res.body.data.axies.results[0]);
-
-// msg.reply(res.body.data.axies.results[0].class);
