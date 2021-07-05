@@ -22,6 +22,7 @@ var moralemax = 100;
 var moralemin = 0;
 var foundAxie = [];
 
+
 var genesPercent;
 var genes;
 
@@ -115,11 +116,12 @@ bot.on('message', message => {
 bot.on('message', msg => {
 
   if (msg.content === 'add'){
-    axies[axiesCount] = new Axie(classes, parts, breedCountmax,hpmax,hpmin,speedmax,speedmin,skillmax,skillmin,moralemax,moralemin);
+    axies[axiesCount] = new Axie(classes,parts,breedCountmax,hpmax,hpmin,speedmax,speedmin,skillmax,skillmin,moralemax,moralemin);
     axiesCount++;
     axies.forEach(axie => {
-      console.log("Axie added" + axie.classes);
-      msg.reply("Axie added" + axie.classes);
+      console.log("Axie in search: " + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax );
+      msg.reply("Axie in search:\n" + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax + "\nHp max: " + axie.hpmax + "\nHp min: " + axie.hpmin + "\nSpeed max: " + axie.speedmax
+       + "\nSpeed min: " + axie.speedmin + "\nSkill max: " + axie.skillmax + "\nSkill min: " + axie.skillmin + "\nMorale max: " + axie.moralemax + "\nMorale min: " + axie.moralemin);
     });
     
   }
@@ -154,13 +156,16 @@ req.end(function (res) {
           if(axie.parts.includes(res.body.data.axies.results[i].parts[g].name)){
             if(partsLength == axie.parts.length - 1){
               if( axie.hpmax >= res.body.data.axies.results[i].stats.hp >= axie.hpmin){
-                  if( axie.speedmax >= res.body.data.axies.results[i].stats.hp >= axie.speedmin){
-                    if( axie.skillmax >= res.body.data.axies.results[i].stats.hp >= axie.skillmin){
-                      if( axie.moralemax >= res.body.data.axies.results[i].stats.hp >= axie.moralemin){
-                        if(foundAxie != res.body.data.axies.results[i].id){
-                          foundAxie = res.body.data.axies.results[i].id;
+                  if( axie.speedmax >= res.body.data.axies.results[i].stats.speed >= axie.speedmin){
+                    if( axie.skillmax >= res.body.data.axies.results[i].stats.skill >= axie.skillmin){
+                      if( axie.moralemax >= res.body.data.axies.results[i].stats.morale >= axie.moralemin){
+                        if(foundAxie.includes(res.body.data.axies.results[i].id)){
+                        }
+                        else{
+                          foundAxie.push(res.body.data.axies.results[i].id);
                           console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
-                          msg.reply(res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+                          msg.reply(res.body.data.axies.results[i].class + "\nParts: " + axie.parts + "\nBreed count: " + axie.hpmax + "\nHp: " + res.body.data.axies.results[i].stats.hp
+                          + "\nSpeed: " + res.body.data.axies.results[i].stats.speed + "\nSkill: " + res.body.data.axies.results[i].stats.skill + "\nMorale: " + res.body.data.axies.results[i].stats.morale + "\n" + res.body.data.axies.results[i].breedCount + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
                         }
                       }
                     }
