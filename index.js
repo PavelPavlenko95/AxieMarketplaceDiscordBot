@@ -126,7 +126,7 @@ bot.on('message', message => {
 bot.on('message', msg => {
 
   if (msg.content === 'add'){
-    axies[axiesCount] = new Axie(classes,parts,breedCountmax,hpmax,hpmin,speedmax,speedmin,skillmax,skillmin,moralemax,moralemin);
+    axies[axiesCount] = new Axie(classes,parts,breedCountmax,hpmax,hpmin,speedmax,speedmin,skillmax,skillmin,moralemax,moralemin,maxprice);
     axiesCount++;
     axies.forEach(axie => {
       console.log("Axie in search: " + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax );
