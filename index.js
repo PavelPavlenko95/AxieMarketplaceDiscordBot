@@ -63,7 +63,7 @@ bot.on('message', message => {
 
     if(command === 'maxprice'){
       maxprice = args;
-      message.reply(`Max price: ${clasmaxpriceses}`);
+      message.reply(`Max price: ${maxprice}`);
     }
     
     if(command === 'parts'){
