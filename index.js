@@ -168,10 +168,19 @@ req.end(function (res) {
     console.log(res.body.data.axies.results[i].class + res.body.data.axies.results[i].id);
 
     axies.forEach(axie => {
-    if(axie.classes.includes(res.body.data.axies.results[i].class)){
+    if(axie.classes.includes(res.body.data.axies.results[i].class) || (axie.classes == 'all')){
       if(axie.breedCountmax >= res.body.data.axies.results[i].breedCount){
-        if(axie.maxprice >= res.body.data.axies.results[i].auction.currentPriceUSD){
+        if(parseFloat(axie.maxprice) >= parseFloat(res.body.data.axies.results[i].auction.currentPriceUSD)){
         partsLength = 0;
+        if(axie.parts == 'all'){
+          if(foundAxie.includes(res.body.data.axies.results[i].id)){
+          }
+          else{
+            foundAxie.push(res.body.data.axies.results[i].id);
+            console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+            msg.reply(res.body.data.axies.results[i].class + "\n" + res.body.data.axies.results[i].image + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\nPrice: " + res.body.data.axies.results[i].auction.currentPriceUSD + " USD" + "\n" + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+          }
+        }
         for (g = 0; g<6; g++){
           if(axie.parts.includes(res.body.data.axies.results[i].parts[g].name)){
             if(partsLength == axie.parts.length - 1){
