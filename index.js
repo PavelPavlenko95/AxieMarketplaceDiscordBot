@@ -24,6 +24,7 @@ var skillmin = 0;
 var moralemax = 100;
 var moralemin = 0;
 var foundAxie = [];
+var maxprice = 99999;
 
 
 var genesPercent;
@@ -31,7 +32,7 @@ var genes;
 
 bot.login(TOKEN);
 
-function Axie(classes, parts, breedCountmax, hpmax, hpmin, speedmax, speedmin, skillmax, skillmin, moralemax, moralemin){
+function Axie(classes, parts, breedCountmax, hpmax, hpmin, speedmax, speedmin, skillmax, skillmin, moralemax, moralemin,maxprice){
   this.classes = classes;
   this.parts = parts;
   this.breedCountmax = breedCountmax;
@@ -43,6 +44,7 @@ function Axie(classes, parts, breedCountmax, hpmax, hpmin, speedmax, speedmin, s
   this.skillmin = skillmin;
   this.moralemax = moralemax;
   this.moralemin = moralemin;
+  this.maxprice = maxprice;
 }
 
 bot.on('ready', () => {
@@ -57,6 +59,11 @@ bot.on('message', message => {
     if(command === 'class'){
       classes = args;
       message.reply(`Selected class: ${classes}`);
+    }
+
+    if(command === 'maxprice'){
+      maxprice = args;
+      message.reply(`Max price: ${clasmaxpriceses}`);
     }
     
     if(command === 'parts'){
@@ -123,7 +130,7 @@ bot.on('message', msg => {
     axiesCount++;
     axies.forEach(axie => {
       console.log("Axie in search: " + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax );
-      msg.reply("Axie in search:\n" + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax + "\nHp max: " + axie.hpmax + " Hp min: " + axie.hpmin + " Speed max: " + axie.speedmax
+      msg.reply("Axie in search:\n" + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax + "\nMax price:" + axie.maxprice + " USD" + "\nHp max: " + axie.hpmax + " Hp min: " + axie.hpmin + " Speed max: " + axie.speedmax
        + " Speed min: " + axie.speedmin + " Skill max: " + axie.skillmax + " Skill min: " + axie.skillmin + " Morale max: " + axie.moralemax + " Morale min: " + axie.moralemin);
     });
   }
@@ -163,6 +170,7 @@ req.end(function (res) {
     axies.forEach(axie => {
     if(axie.classes.includes(res.body.data.axies.results[i].class)){
       if(axie.breedCountmax >= res.body.data.axies.results[i].breedCount){
+        if(axie.maxprice >= res.body.data.axies.results[i].auction.currentPriceUSD){
         partsLength = 0;
         for (g = 0; g<6; g++){
           if(axie.parts.includes(res.body.data.axies.results[i].parts[g].name)){
@@ -189,6 +197,7 @@ req.end(function (res) {
               partsLength++;
             }
           }
+        }
         }
       }  
     }
