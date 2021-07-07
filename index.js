@@ -5,6 +5,8 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 const prefix = "!";
+const fs = require('fs');
+const axiequery = require("./axiequery");
 
 var app = express()
 
@@ -126,13 +128,34 @@ bot.on('message', message => {
 bot.on('message', msg => {
 
   if (msg.content === 'add'){
-    axies[axiesCount] = new Axie(classes,parts,breedCountmax,hpmax,hpmin,speedmax,speedmin,skillmax,skillmin,moralemax,moralemin,maxprice);
-    axiesCount++;
-    axies.forEach(axie => {
-      console.log("Axie in search: " + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax );
-      msg.reply("Axie in search:\n" + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax + "\nMax price:" + axie.maxprice + " USD" + "\nHp max: " + axie.hpmax + " Hp min: " + axie.hpmin + " Speed max: " + axie.speedmax
-       + " Speed min: " + axie.speedmin + " Skill max: " + axie.skillmax + " Skill min: " + axie.skillmin + " Morale max: " + axie.moralemax + " Morale min: " + axie.moralemin);
+    // axies[axiesCount] = new Axie(classes,parts,breedCountmax,hpmax,hpmin,speedmax,speedmin,skillmax,skillmin,moralemax,moralemin,maxprice);
+    let axie ={
+      "classes": classes,
+      "parts": parts,
+      "breedCountmax": breedCountmax,
+      "hpmax": hpmax,
+      "hpmin": hpmin,
+      "speedmax":speedmax,
+      "speedmin":speedmin,
+      "skillmax":skillmax,
+      "skillmin":skillmin,
+      "moralemax":moralemax,
+      "moralemin":moralemin,
+      "maxprice":maxprice
+    }
+    axiequery.push(axie);
+    fs.writeFile("axiequery.json", JSON.stringify(axiequery), err =>{
+      // Checking for errors
+    if (err) throw err; 
+   
+    console.log("Done writing"); // Success
     });
+    // axiesCount++;
+    // axies.forEach(axie => {
+    //   console.log("Axie in search: " + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax );
+    //   msg.reply("Axie in search:\n" + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax + "\nMax price:" + axie.maxprice + " USD" + "\nHp max: " + axie.hpmax + " Hp min: " + axie.hpmin + " Speed max: " + axie.speedmax
+    //    + " Speed min: " + axie.speedmin + " Skill max: " + axie.skillmax + " Skill min: " + axie.skillmin + " Morale max: " + axie.moralemax + " Morale min: " + axie.moralemin);
+    // });
   }
 });
 
@@ -164,9 +187,14 @@ req.send("{\"query\":\"query GetAxieLatest($auctionType: AuctionType, $criteria:
 req.end(function (res) {
   if (res.error) throw new Error(res.error);
 
+  fs.readFile("axiequery.json", function(err, data) {
+    if (err) throw err;
+    axies = JSON.parse(data);
+    console.log(axies); 
+});
+
   for(var i = 0; i<10; i++){ 
     console.log(res.body.data.axies.results[i].class + res.body.data.axies.results[i].id);
-
     axies.forEach(axie => {
     if(axie.classes.includes(res.body.data.axies.results[i].class) || (axie.classes == 'all')){
       if(axie.breedCountmax >= res.body.data.axies.results[i].breedCount){
