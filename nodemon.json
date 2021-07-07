@@ -1,0 +1,7 @@
+{
+    "env": {
+        "mongoDatabase": "axie",
+        "mongoUserName": "admin",
+        "mongoUserPassword": "wpToFKdjrKR3lHru"
+    }
+}
