@@ -26,7 +26,7 @@ var skillmin = 0;
 var moralemax = 100;
 var moralemin = 0;
 var foundAxie = [];
-var maxprice = 99999;
+var maxprice = 9999900000000000000000;
 
 
 var genesPercent;
@@ -147,23 +147,29 @@ bot.on('message', msg => {
     fs.writeFile("axiequery.json", JSON.stringify(axiequery), err =>{
       // Checking for errors
     if (err) throw err; 
-   
+    msg.reply("Added.")
     console.log("Done writing"); // Success
     });
     // axiesCount++;
-    // axies.forEach(axie => {
-    //   console.log("Axie in search: " + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax );
-    //   msg.reply("Axie in search:\n" + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax + "\nMax price:" + axie.maxprice + " USD" + "\nHp max: " + axie.hpmax + " Hp min: " + axie.hpmin + " Speed max: " + axie.speedmax
-    //    + " Speed min: " + axie.speedmin + " Skill max: " + axie.skillmax + " Skill min: " + axie.skillmin + " Morale max: " + axie.moralemax + " Morale min: " + axie.moralemin);
-    // });
+    
   }
 });
 
 bot.on('message', msg => {
 
   if (msg.content === 'clear'){
-    axies.length = 0;
-    msg.reply("Cleared all Axies.");
+    axiequery.pop();
+    msg.reply("Cleared last query.");
+  }
+});
+
+bot.on('message', msg => {
+
+  if (msg.content === 'show'){
+    axiequery.forEach(axie => {
+      msg.reply("Axie in search:\nClass: " + axie.classes + "\nParts: " + axie.parts + "\nBreed count: " + axie.breedCountmax + "\nMax price:" + axie.maxprice + " ETH" + "\nHp max: " + axie.hpmax + " Hp min: " + axie.hpmin + " Speed max: " + axie.speedmax
+       + " Speed min: " + axie.speedmin + " Skill max: " + axie.skillmax + " Skill min: " + axie.skillmin + " Morale max: " + axie.moralemax + " Morale min: " + axie.moralemin);
+    });
   }
 });
 
@@ -190,7 +196,6 @@ req.end(function (res) {
   fs.readFile("axiequery.json", function(err, data) {
     if (err) throw err;
     axies = JSON.parse(data);
-    console.log(axies); 
 });
 
   for(var i = 0; i<10; i++){ 
@@ -198,7 +203,7 @@ req.end(function (res) {
     axies.forEach(axie => {
     if(axie.classes.includes(res.body.data.axies.results[i].class) || (axie.classes == 'all')){
       if(axie.breedCountmax >= res.body.data.axies.results[i].breedCount){
-        if(parseFloat(axie.maxprice) >= parseFloat(res.body.data.axies.results[i].auction.currentPriceUSD)){
+        if(parseFloat(axie.maxprice) >= (parseFloat(res.body.data.axies.results[i].auction.currentPrice)/1000000000000000000)){
         partsLength = 0;
         if(axie.parts == 'all'){
           if(foundAxie.includes(res.body.data.axies.results[i].id)){
@@ -240,7 +245,8 @@ req.end(function (res) {
     }
   });
   }
-});
+}
+);
 
   bot.on('message', msg => {
     if (msg.content === 'stop') {
