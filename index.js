@@ -207,104 +207,104 @@ catch(e){
   for(var i = 0; i<10; i++){ 
     try{
     console.log(res.body.data.axies.results[i].class + res.body.data.axies.results[i].id); 
-    if(res.body.data.axies.results[i].class == null){
-      const unirest = require("unirest");
+    // if(res.body.data.axies.results[i].class == null){
+    //   const unirest = require("unirest");
 
-      const req = unirest("POST", "https://axieinfinity.com/graphql-server-v2/graphql");
+    //   const req = unirest("POST", "https://axieinfinity.com/graphql-server-v2/graphql");
       
-      req.headers({
-        "Content-Type": "application/json"
-      });
-      var axiechild = res.body.data.axies.results[i].id;
-      var axiequery = `{\"query\":\"query GetAxieDetail($axieId: ID!) {\\n  axie(axieId: $axieId) {\\n    ...AxieDetail\\n    __typename\\n  }\\n}\\n\\nfragment AxieDetail on Axie {\\n  id\\n  image\\n  class\\n  chain\\n  name\\n  genes\\n  owner\\n  birthDate\\n  bodyShape\\n  class\\n  sireId\\n  sireClass\\n  matronId\\n  matronClass\\n  stage\\n  title\\n  breedCount\\n  level\\n  figure {\\n    atlas\\n    model\\n    image\\n    __typename\\n  }\\n  parts {\\n    ...AxiePart\\n    __typename\\n  }\\n  stats {\\n    ...AxieStats\\n    __typename\\n  }\\n  auction {\\n    ...AxieAuction\\n    __typename\\n  }\\n  ownerProfile {\\n    name\\n    __typename\\n  }\\n  battleInfo {\\n    ...AxieBattleInfo\\n    __typename\\n  }\\n  children {\\n    id\\n    name\\n    class\\n    image\\n    title\\n    stage\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieBattleInfo on AxieBattleInfo {\\n  banned\\n  banUntil\\n  level\\n  __typename\\n}\\n\\nfragment AxiePart on AxiePart {\\n  id\\n  name\\n  class\\n  type\\n  specialGenes\\n  stage\\n  abilities {\\n    ...AxieCardAbility\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieCardAbility on AxieCardAbility {\\n  id\\n  name\\n  attack\\n  defense\\n  energy\\n  description\\n  backgroundUrl\\n  effectIconUrl\\n  __typename\\n}\\n\\nfragment AxieStats on AxieStats {\\n  hp\\n  speed\\n  skill\\n  morale\\n  __typename\\n}\\n\\nfragment AxieAuction on Auction {\\n  startingPrice\\n  endingPrice\\n  startingTimestamp\\n  endingTimestamp\\n  duration\\n  timeLeft\\n  currentPrice\\n  currentPriceUSD\\n  suggestedPrice\\n  seller\\n  listingIndex\\n  state\\n  __typename\\n}\\n\",\"variables\":{\"axieId\":\"${axiechild}\"}}`;
-      // axiequery.replace("1683851", res.body.data.axies.results[i].id);
-      req.send(axiequery);
+    //   req.headers({
+    //     "Content-Type": "application/json"
+    //   });
+      // var axiechild = res.body.data.axies.results[i].id;
+      // var axiequery = `{\"query\":\"query GetAxieDetail($axieId: ID!) {\\n  axie(axieId: $axieId) {\\n    ...AxieDetail\\n    __typename\\n  }\\n}\\n\\nfragment AxieDetail on Axie {\\n  id\\n  image\\n  class\\n  chain\\n  name\\n  genes\\n  owner\\n  birthDate\\n  bodyShape\\n  class\\n  sireId\\n  sireClass\\n  matronId\\n  matronClass\\n  stage\\n  title\\n  breedCount\\n  level\\n  figure {\\n    atlas\\n    model\\n    image\\n    __typename\\n  }\\n  parts {\\n    ...AxiePart\\n    __typename\\n  }\\n  stats {\\n    ...AxieStats\\n    __typename\\n  }\\n  auction {\\n    ...AxieAuction\\n    __typename\\n  }\\n  ownerProfile {\\n    name\\n    __typename\\n  }\\n  battleInfo {\\n    ...AxieBattleInfo\\n    __typename\\n  }\\n  children {\\n    id\\n    name\\n    class\\n    image\\n    title\\n    stage\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieBattleInfo on AxieBattleInfo {\\n  banned\\n  banUntil\\n  level\\n  __typename\\n}\\n\\nfragment AxiePart on AxiePart {\\n  id\\n  name\\n  class\\n  type\\n  specialGenes\\n  stage\\n  abilities {\\n    ...AxieCardAbility\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieCardAbility on AxieCardAbility {\\n  id\\n  name\\n  attack\\n  defense\\n  energy\\n  description\\n  backgroundUrl\\n  effectIconUrl\\n  __typename\\n}\\n\\nfragment AxieStats on AxieStats {\\n  hp\\n  speed\\n  skill\\n  morale\\n  __typename\\n}\\n\\nfragment AxieAuction on Auction {\\n  startingPrice\\n  endingPrice\\n  startingTimestamp\\n  endingTimestamp\\n  duration\\n  timeLeft\\n  currentPrice\\n  currentPriceUSD\\n  suggestedPrice\\n  seller\\n  listingIndex\\n  state\\n  __typename\\n}\\n\",\"variables\":{\"axieId\":\"${axiechild}\"}}`;
+      // // axiequery.replace("1683851", res.body.data.axies.results[i].id);
+      // req.send(axiequery);
       
-      req.end(function (res) {
-        if (res.error) throw new Error(res.error);
+      // req.end(function (res) {
+      //   if (res.error) throw new Error(res.error);
       
-        // console.log(res.body.data.axie.sireId);
-        // console.log(res.body.data.axie.matronId);
-      });
-      axiequery = `{\"query\":\"query GetAxieDetail($axieId: ID!) {\\n  axie(axieId: $axieId) {\\n    ...AxieDetail\\n    __typename\\n  }\\n}\\n\\nfragment AxieDetail on Axie {\\n  id\\n  image\\n  class\\n  chain\\n  name\\n  genes\\n  owner\\n  birthDate\\n  bodyShape\\n  class\\n  sireId\\n  sireClass\\n  matronId\\n  matronClass\\n  stage\\n  title\\n  breedCount\\n  level\\n  figure {\\n    atlas\\n    model\\n    image\\n    __typename\\n  }\\n  parts {\\n    ...AxiePart\\n    __typename\\n  }\\n  stats {\\n    ...AxieStats\\n    __typename\\n  }\\n  auction {\\n    ...AxieAuction\\n    __typename\\n  }\\n  ownerProfile {\\n    name\\n    __typename\\n  }\\n  battleInfo {\\n    ...AxieBattleInfo\\n    __typename\\n  }\\n  children {\\n    id\\n    name\\n    class\\n    image\\n    title\\n    stage\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieBattleInfo on AxieBattleInfo {\\n  banned\\n  banUntil\\n  level\\n  __typename\\n}\\n\\nfragment AxiePart on AxiePart {\\n  id\\n  name\\n  class\\n  type\\n  specialGenes\\n  stage\\n  abilities {\\n    ...AxieCardAbility\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieCardAbility on AxieCardAbility {\\n  id\\n  name\\n  attack\\n  defense\\n  energy\\n  description\\n  backgroundUrl\\n  effectIconUrl\\n  __typename\\n}\\n\\nfragment AxieStats on AxieStats {\\n  hp\\n  speed\\n  skill\\n  morale\\n  __typename\\n}\\n\\nfragment AxieAuction on Auction {\\n  startingPrice\\n  endingPrice\\n  startingTimestamp\\n  endingTimestamp\\n  duration\\n  timeLeft\\n  currentPrice\\n  currentPriceUSD\\n  suggestedPrice\\n  seller\\n  listingIndex\\n  state\\n  __typename\\n}\\n\",\"variables\":{\"axieId\":\"${res.body.data.axie.sireId}\"}}`;
-      req.send(axiequery);
+      //   // console.log(res.body.data.axie.sireId);
+      //   // console.log(res.body.data.axie.matronId);
+      // });
+      // axiequery = `{\"query\":\"query GetAxieDetail($axieId: ID!) {\\n  axie(axieId: $axieId) {\\n    ...AxieDetail\\n    __typename\\n  }\\n}\\n\\nfragment AxieDetail on Axie {\\n  id\\n  image\\n  class\\n  chain\\n  name\\n  genes\\n  owner\\n  birthDate\\n  bodyShape\\n  class\\n  sireId\\n  sireClass\\n  matronId\\n  matronClass\\n  stage\\n  title\\n  breedCount\\n  level\\n  figure {\\n    atlas\\n    model\\n    image\\n    __typename\\n  }\\n  parts {\\n    ...AxiePart\\n    __typename\\n  }\\n  stats {\\n    ...AxieStats\\n    __typename\\n  }\\n  auction {\\n    ...AxieAuction\\n    __typename\\n  }\\n  ownerProfile {\\n    name\\n    __typename\\n  }\\n  battleInfo {\\n    ...AxieBattleInfo\\n    __typename\\n  }\\n  children {\\n    id\\n    name\\n    class\\n    image\\n    title\\n    stage\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieBattleInfo on AxieBattleInfo {\\n  banned\\n  banUntil\\n  level\\n  __typename\\n}\\n\\nfragment AxiePart on AxiePart {\\n  id\\n  name\\n  class\\n  type\\n  specialGenes\\n  stage\\n  abilities {\\n    ...AxieCardAbility\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieCardAbility on AxieCardAbility {\\n  id\\n  name\\n  attack\\n  defense\\n  energy\\n  description\\n  backgroundUrl\\n  effectIconUrl\\n  __typename\\n}\\n\\nfragment AxieStats on AxieStats {\\n  hp\\n  speed\\n  skill\\n  morale\\n  __typename\\n}\\n\\nfragment AxieAuction on Auction {\\n  startingPrice\\n  endingPrice\\n  startingTimestamp\\n  endingTimestamp\\n  duration\\n  timeLeft\\n  currentPrice\\n  currentPriceUSD\\n  suggestedPrice\\n  seller\\n  listingIndex\\n  state\\n  __typename\\n}\\n\",\"variables\":{\"axieId\":\"${res.body.data.axie.sireId}\"}}`;
+      // req.send(axiequery);
 
-      req.end(function (res) {
-        if (res.error) throw new Error(res.error);
-        axies.forEach(axie => {
-              partsLength = 0;
-              if(axie.classes.includes(res.body.data.axie.class)){
-              for (g = 0; g<6; g++){
-                if(axie.parts.includes(res.body.data.axie.parts[g].name)){
-                  if(partsLength == axie.parts.length - 1){
-                    if( axie.hpmax >= res.body.data.axie.stats.hp >= axie.hpmin){
-                        if( axie.speedmax >= res.body.data.axie.stats.speed >= axie.speedmin){
-                          if( axie.skillmax >= res.body.data.axie.stats.skill >= axie.skillmin){
-                            if( axie.moralemax >= res.body.data.axie.stats.morale >= axie.moralemin){
-                              if(foundAxie.includes(res.body.data.axie.id)){
-                              }
-                              else{
-                                foundAxie.push(res.body.data.axie.id);
-                                console.log("FOUND" + res.body.data.axie.class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axie.id);
-                                msg.reply("Father is interesting\n" + "https://marketplace.axieinfinity.com/axie/" + axiechild);
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  else{
+      // req.end(function (res) {
+      //   if (res.error) throw new Error(res.error);
+      //   axies.forEach(axie => {
+      //         partsLength = 0;
+      //         if(axie.classes.includes(res.body.data.axie.class)){
+      //         for (g = 0; g<6; g++){
+      //           if(axie.parts.includes(res.body.data.axie.parts[g].name)){
+      //             if(partsLength == axie.parts.length - 1){
+      //               if( axie.hpmax >= res.body.data.axie.stats.hp >= axie.hpmin){
+      //                   if( axie.speedmax >= res.body.data.axie.stats.speed >= axie.speedmin){
+      //                     if( axie.skillmax >= res.body.data.axie.stats.skill >= axie.skillmin){
+      //                       if( axie.moralemax >= res.body.data.axie.stats.morale >= axie.moralemin){
+      //                         if(foundAxie.includes(res.body.data.axie.id)){
+      //                         }
+      //                         else{
+      //                           foundAxie.push(res.body.data.axie.id);
+      //                           console.log("FOUND" + res.body.data.axie.class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axie.id);
+      //                           msg.reply("Father is interesting\n" + "https://marketplace.axieinfinity.com/axie/" + axiechild);
+      //                         }
+      //                       }
+      //                     }
+      //                   }
+      //                 }
+      //               }
+      //             else{
                     
-                    partsLength++;
-                  }
-                }
-              }
+      //               partsLength++;
+      //             }
+      //           }
+      //         }
              
-            }
-        });
+      //       }
+      //   });
         
 
-      });
+      // });
 
-      axiequery = `{\"query\":\"query GetAxieDetail($axieId: ID!) {\\n  axie(axieId: $axieId) {\\n    ...AxieDetail\\n    __typename\\n  }\\n}\\n\\nfragment AxieDetail on Axie {\\n  id\\n  image\\n  class\\n  chain\\n  name\\n  genes\\n  owner\\n  birthDate\\n  bodyShape\\n  class\\n  sireId\\n  sireClass\\n  matronId\\n  matronClass\\n  stage\\n  title\\n  breedCount\\n  level\\n  figure {\\n    atlas\\n    model\\n    image\\n    __typename\\n  }\\n  parts {\\n    ...AxiePart\\n    __typename\\n  }\\n  stats {\\n    ...AxieStats\\n    __typename\\n  }\\n  auction {\\n    ...AxieAuction\\n    __typename\\n  }\\n  ownerProfile {\\n    name\\n    __typename\\n  }\\n  battleInfo {\\n    ...AxieBattleInfo\\n    __typename\\n  }\\n  children {\\n    id\\n    name\\n    class\\n    image\\n    title\\n    stage\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieBattleInfo on AxieBattleInfo {\\n  banned\\n  banUntil\\n  level\\n  __typename\\n}\\n\\nfragment AxiePart on AxiePart {\\n  id\\n  name\\n  class\\n  type\\n  specialGenes\\n  stage\\n  abilities {\\n    ...AxieCardAbility\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieCardAbility on AxieCardAbility {\\n  id\\n  name\\n  attack\\n  defense\\n  energy\\n  description\\n  backgroundUrl\\n  effectIconUrl\\n  __typename\\n}\\n\\nfragment AxieStats on AxieStats {\\n  hp\\n  speed\\n  skill\\n  morale\\n  __typename\\n}\\n\\nfragment AxieAuction on Auction {\\n  startingPrice\\n  endingPrice\\n  startingTimestamp\\n  endingTimestamp\\n  duration\\n  timeLeft\\n  currentPrice\\n  currentPriceUSD\\n  suggestedPrice\\n  seller\\n  listingIndex\\n  state\\n  __typename\\n}\\n\",\"variables\":{\"axieId\":\"${res.body.data.axie.matronId}\"}}`;
+    //   axiequery = `{\"query\":\"query GetAxieDetail($axieId: ID!) {\\n  axie(axieId: $axieId) {\\n    ...AxieDetail\\n    __typename\\n  }\\n}\\n\\nfragment AxieDetail on Axie {\\n  id\\n  image\\n  class\\n  chain\\n  name\\n  genes\\n  owner\\n  birthDate\\n  bodyShape\\n  class\\n  sireId\\n  sireClass\\n  matronId\\n  matronClass\\n  stage\\n  title\\n  breedCount\\n  level\\n  figure {\\n    atlas\\n    model\\n    image\\n    __typename\\n  }\\n  parts {\\n    ...AxiePart\\n    __typename\\n  }\\n  stats {\\n    ...AxieStats\\n    __typename\\n  }\\n  auction {\\n    ...AxieAuction\\n    __typename\\n  }\\n  ownerProfile {\\n    name\\n    __typename\\n  }\\n  battleInfo {\\n    ...AxieBattleInfo\\n    __typename\\n  }\\n  children {\\n    id\\n    name\\n    class\\n    image\\n    title\\n    stage\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieBattleInfo on AxieBattleInfo {\\n  banned\\n  banUntil\\n  level\\n  __typename\\n}\\n\\nfragment AxiePart on AxiePart {\\n  id\\n  name\\n  class\\n  type\\n  specialGenes\\n  stage\\n  abilities {\\n    ...AxieCardAbility\\n    __typename\\n  }\\n  __typename\\n}\\n\\nfragment AxieCardAbility on AxieCardAbility {\\n  id\\n  name\\n  attack\\n  defense\\n  energy\\n  description\\n  backgroundUrl\\n  effectIconUrl\\n  __typename\\n}\\n\\nfragment AxieStats on AxieStats {\\n  hp\\n  speed\\n  skill\\n  morale\\n  __typename\\n}\\n\\nfragment AxieAuction on Auction {\\n  startingPrice\\n  endingPrice\\n  startingTimestamp\\n  endingTimestamp\\n  duration\\n  timeLeft\\n  currentPrice\\n  currentPriceUSD\\n  suggestedPrice\\n  seller\\n  listingIndex\\n  state\\n  __typename\\n}\\n\",\"variables\":{\"axieId\":\"${res.body.data.axie.matronId}\"}}`;
 
-      req.send(axiequery);
+    //   req.send(axiequery);
 
-      req.end(function (res) {
-        if (res.error) throw new Error(res.error);
-        axies.forEach(axie => {
-              partsLength = 0;
-              if(axie.classes.includes(res.body.data.axie.class)){
-              for (g = 0; g<6; g++){
-                if(axie.parts.includes(res.body.data.axie.parts[g].name)){
-                  if(partsLength == axie.parts.length - 1){
-                    if( axie.hpmax >= res.body.data.axie.stats.hp >= axie.hpmin){
-                        if( axie.speedmax >= res.body.data.axie.stats.speed >= axie.speedmin){
-                          if( axie.skillmax >= res.body.data.axie.stats.skill >= axie.skillmin){
-                            if( axie.moralemax >= res.body.data.axie.stats.morale >= axie.moralemin){
-                              if(foundAxie.includes(res.body.data.axie.id)){
-                              }
-                              else{
-                                foundAxie.push(res.body.data.axie.id);
-                                console.log("FOUND" + res.body.data.axie.class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axie.id);
-                                msg.reply("Mother is interesting\n" + "https://marketplace.axieinfinity.com/axie/" + axiechild);
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  else{
+    //   req.end(function (res) {
+    //     if (res.error) throw new Error(res.error);
+    //     axies.forEach(axie => {
+    //           partsLength = 0;
+    //           if(axie.classes.includes(res.body.data.axie.class)){
+    //           for (g = 0; g<6; g++){
+    //             if(axie.parts.includes(res.body.data.axie.parts[g].name)){
+    //               if(partsLength == axie.parts.length - 1){
+    //                 if( axie.hpmax >= res.body.data.axie.stats.hp >= axie.hpmin){
+    //                     if( axie.speedmax >= res.body.data.axie.stats.speed >= axie.speedmin){
+    //                       if( axie.skillmax >= res.body.data.axie.stats.skill >= axie.skillmin){
+    //                         if( axie.moralemax >= res.body.data.axie.stats.morale >= axie.moralemin){
+    //                           if(foundAxie.includes(res.body.data.axie.id)){
+    //                           }
+    //                           else{
+    //                             foundAxie.push(res.body.data.axie.id);
+    //                             console.log("FOUND" + res.body.data.axie.class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axie.id);
+    //                             msg.reply("Mother is interesting\n" + "https://marketplace.axieinfinity.com/axie/" + axiechild);
+    //                           }
+    //                         }
+    //                       }
+    //                     }
+    //                   }
+    //                 }
+    //               else{
                     
-                    partsLength++;
-                  }
-                }
-              }
+    //                 partsLength++;
+    //               }
+    //             }
+    //           }
              
-            }
-        });
-      });
-    }   
+    //         }
+    //     });
+    //   });
+    // }   
     axies.forEach(axie => {
     if(axie.classes.includes(res.body.data.axies.results[i].class) || (axie.classes == 'all')){
       if(axie.breedCountmax >= res.body.data.axies.results[i].breedCount){
