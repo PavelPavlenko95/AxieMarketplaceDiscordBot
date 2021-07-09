@@ -363,7 +363,7 @@ catch(e){
     clearTimeout(timerId);
     }
   })
-  timerId = setTimeout(tick, 3000);
-}, 3000);
+  timerId = setTimeout(tick, 1000);
+}, 1000);
 }
 });
