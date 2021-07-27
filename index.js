@@ -315,7 +315,42 @@ catch(e){
           else{
             foundAxie.push(res.body.data.axies.results[i].id);
             console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
-            msg.reply(res.body.data.axies.results[i].class + "\n" + res.body.data.axies.results[i].image + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\nPrice: " + res.body.data.axies.results[i].auction.currentPriceUSD + " USD" + "\n" + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+            msg.reply(res.body.data.axies.results[i].class + "\n" + res.body.data.axies.results[i].image + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\nPurity: " + purity + "\nPrice: " + res.body.data.axies.results[i].auction.currentPriceUSD + " USD" + "\n" + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+var getgenes = "https://api.axie.technology/getgenes/" + res.body.data.axies.results[i].id;
+const raq = unirest("GET", getgenes);
+raq.end(function (res1) {
+  if (res1.error) throw new Error(res1.error);
+    console.log(res1.body);
+var purity = 0;
+var axieclass = res1.body.cls;
+
+if(res1.body.eyes.d.class === axieclass) purity+=13;
+if(res1.body.eyes.r1.class === axieclass) purity+=3;
+if(res1.body.eyes.r2.class === axieclass) purity+=1;
+
+if(res1.body.mouth.d.class === axieclass) purity+=13;
+if(res1.body.mouth.r1.class === axieclass) purity+=3;
+if(res1.body.mouth.r2.class === axieclass) purity+=1;
+
+if(res1.body.ears.d.class === axieclass) purity+=13;
+if(res1.body.ears.r1.class === axieclass) purity+=3;
+if(res1.body.ears.r2.class === axieclass) purity+=1;
+
+if(res1.body.horn.d.class === axieclass) purity+=13;
+if(res1.body.horn.r1.class === axieclass) purity+=3;
+if(res1.body.horn.r2.class === axieclass) purity+=1;
+
+if(res1.body.back.d.class === axieclass) purity+=13;
+if(res1.body.back.r1.class === axieclass) purity+=3;
+if(res1.body.back.r2.class === axieclass) purity+=1;
+
+if(res1.body.tail.d.class === axieclass) purity+=13;
+if(res1.body.tail.r1.class === axieclass) purity+=3;
+if(res1.body.tail.r2.class === axieclass) purity+=1;
+
+console.log(purity);
+});
+           msg.reply(purity); 
           }
         }
         for (g = 0; g<6; g++){
@@ -330,8 +365,45 @@ catch(e){
                         else{
                           foundAxie.push(res.body.data.axies.results[i].id);
                           console.log("FOUND" + res.body.data.axies.results[i].class + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
-                          msg.reply(res.body.data.axies.results[i].class + "\n" + res.body.data.axies.results[i].image + "\nParts: " + axie.parts + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\nPrice: " + res.body.data.axies.results[i].auction.currentPriceUSD + " USD" +"\nHp: " + res.body.data.axies.results[i].stats.hp
+                          msg.reply(res.body.data.axies.results[i].class + "\n" + res.body.data.axies.results[i].image + "\nParts: " + axie.parts + "\nBreed count: " + res.body.data.axies.results[i].breedCount + "\nPurity: " + purity + "\nPrice: " + res.body.data.axies.results[i].auction.currentPriceUSD + " USD" +"\nHp: " + res.body.data.axies.results[i].stats.hp
                           + "  Speed: " + res.body.data.axies.results[i].stats.speed + "  Skill: " + res.body.data.axies.results[i].stats.skill + "  Morale: " + res.body.data.axies.results[i].stats.morale + "\n" + " https://marketplace.axieinfinity.com/axie/" + res.body.data.axies.results[i].id);
+
+var getgenes = "https://api.axie.technology/getgenes/" + res.body.data.axies.results[i].id;
+const req1 = unirest("GET", getgenes);
+req1.end(function (res2) {
+  if (res2.error) throw new Error(res2.error);
+    console.log(res2.body);
+var purity = 0;
+var axieclass = res2.body.cls;
+
+if(res2.body.eyes.d.class === axieclass) purity+=13;
+if(res2.body.eyes.r1.class === axieclass) purity+=3;
+if(res2.body.eyes.r2.class === axieclass) purity+=1;
+
+if(res2.body.mouth.d.class === axieclass) purity+=13;
+if(res2.body.mouth.r1.class === axieclass) purity+=3;
+if(res2.body.mouth.r2.class === axieclass) purity+=1;
+
+if(res2.body.ears.d.class === axieclass) purity+=13;
+if(res2.body.ears.r1.class === axieclass) purity+=3;
+if(res2.body.ears.r2.class === axieclass) purity+=1;
+
+if(res2.body.horn.d.class === axieclass) purity+=13;
+if(res2.body.horn.r1.class === axieclass) purity+=3;
+if(res2.body.horn.r2.class === axieclass) purity+=1;
+
+if(res2.body.back.d.class === axieclass) purity+=13;
+if(res2.body.back.r1.class === axieclass) purity+=3;
+if(res2.body.back.r2.class === axieclass) purity+=1;
+
+if(res2.body.tail.d.class === axieclass) purity+=13;
+if(res2.body.tail.r1.class === axieclass) purity+=3;
+if(res2.body.tail.r2.class === axieclass) purity+=1;
+
+console.log(purity);
+});
+
+                          
                         }
                       }
                     }
